@@ -62,19 +62,30 @@ align-items:center;
 }
 
 `;
-const AddTransactionView = ()=>{
+const AddTransactionView = (props)=>{
   
   const [amount, setAmount] = useState();
   const [desc, setDesc] = useState();
   const [type, setType] = useState('EXPENSE');
+
   const addTransaction = ()=>{
-    console.log({amount, desc, type});
-  }
+    props.addTransaction({
+      amount:Number(amount), 
+      desc, 
+      type, 
+      id: Date.now(),
+    });    
+    props.toggleAddTxn();
+  };
 
   return(
     <AddTransactionContainer>
-
-      <input placeholder="Amount" value={amount} onChange={(e)=>setAmount(e.target.value)}/>
+      <input 
+      placeholder="Amount"
+      value={amount} 
+      type='number'
+      onChange={(e)=>setAmount(e.target.value)}
+      />
       <input placeholder="Description" value={desc} onChange={(e)=>setDesc(e.target.value)}/>
       <RadioBox>
         <input 
@@ -96,7 +107,10 @@ const AddTransactionView = ()=>{
         />
         <label htmlFor="Income">Income</label>        
       </RadioBox>
-      <AddTransaction onClick={addTransaction}>Add Transaction</AddTransaction>
+      <AddTransaction 
+      onClick={addTransaction}>
+        Add Transaction
+        </AddTransaction>
      
 
     </AddTransactionContainer>
@@ -119,11 +133,11 @@ const OverviewComponent =(props) => {
             Balance: $1000
             <AddTransaction onClick={()=>toggleAddTxn(!isAddTxnVisible)}>{isAddTxnVisible ? "Cancel":"ADD"}</AddTransaction>
         </BalanceBox>
-        {isAddTxnVisible && <AddTransactionView/>}
-
-        
-      
-
+        {isAddTxnVisible && (
+          <AddTransactionView 
+          toggleAddTxn={toggleAddTxn} 
+          addTransaction={props.addTransaction}
+        />)}     
     </Container>
   )
 };
