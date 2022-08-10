@@ -20,7 +20,7 @@ function App() {
     <Container >      
       <Header>Expense Tracker</Header>
       <HomeComponent/>
-    </Container>
+    </Container we>
   );
 }
 
