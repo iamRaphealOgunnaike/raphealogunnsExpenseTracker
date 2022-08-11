@@ -120,8 +120,27 @@ const AddTransactionView = (props)=>{
 
 const ExpenseBox =styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: column;  
+  border-radius: 4px;
+  border:1px solid #e6e8e9; 
+  padding:15px 20px; 
+  width:135px; 
+  font-size:14px;
+  & span{
+    font-weight:bold;
+    font-size: 20px;
+    color:${(props)=>(props.isIncome ? 'green':'red')};
+  }
  `;
+
+const ExpenseContainer=styled.div`
+  display: flex;
+  flex-direction:row;
+  gap:12px;
+  margin:20px;
+  
+
+`
 
 
 const OverviewComponent =(props) => {
@@ -137,7 +156,15 @@ const OverviewComponent =(props) => {
           <AddTransactionView 
           toggleAddTxn={toggleAddTxn} 
           addTransaction={props.addTransaction}
-        />)}     
+        />)} 
+        <ExpenseContainer>
+          <ExpenseBox isIncome={false}>
+            Expense<span>$1000</span>
+          </ExpenseBox>
+          <ExpenseBox isIncome={true}>
+            Income<span>$5000</span>
+          </ExpenseBox>         
+        </ExpenseContainer>    
     </Container>
   )
 };
