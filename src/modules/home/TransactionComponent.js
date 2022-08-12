@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { useState } from "react";
+import { useEffect } from "react";
 
 const Container =styled.div`
 display:flex;
@@ -38,17 +40,38 @@ const TransactionCell=(props)=>{
       <span>{props.payload.desc}</span>
       <span>${props.payload.amount}</span>
     </Cell>
+   
+    
   )
 }
 
 
 const TransactionComponent =(props) => {
+  const [searchText,updateSearchText] = useState("");
+  const [filteredTransaction,updateTxn] = useState(props.transactions);
+  const fliterData=(searchText)=>{
+    if (!searchText || !searchText.trim().length){
+      updateTxn(props.transactions);
+      return;
+    }
+    let txn =[...props.transactions];
+    txn = txn.filter((payload) =>payload.desc.toLowerCase().includes(searchText.toLowerCase().trim()));
+    updateTxn(txn)
+
+  };
+
+  useEffect(()=>fliterData(searchText), [props.transactions]);
   return (
     <Container>
       Transactions
-      <input placeholder='Search'/>
-      {props.transactions?.length
-       ? props.transactions.map((payload)=>(
+      <input placeholder='Search' 
+      value={searchText} 
+      onChange={(e)=>{updateSearchText(e.target.value)
+        fliterData(e.target.value);
+        }}
+        />
+      {filteredTransaction?.length
+       ? filteredTransaction.map((payload)=> (
             <TransactionCell payload={payload} />
          ))
        : ""}

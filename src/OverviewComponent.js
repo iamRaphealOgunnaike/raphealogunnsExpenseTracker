@@ -93,7 +93,7 @@ const AddTransactionView = (props)=>{
         id="expense" 
         name="type" 
         value="EXPENSE" 
-        checked={type==='EXPENSE'}
+        checked={type==="EXPENSE"}
         onChange={(e)=>setType(e.target.value)}
         />
         <label htmlFor="expense">Expense</label> 
@@ -102,10 +102,11 @@ const AddTransactionView = (props)=>{
         id="income" 
         name="type" 
         value="INCOME" 
-        checked={type==='INCOME'}
+        checked={type==="INCOME"}
         onChange={(e)=>setType(e.target.value)}
         />
-        <label htmlFor="Income">Income</label>        
+        <label htmlFor="income">Income</label> 
+               
       </RadioBox>
       <AddTransaction 
       onClick={addTransaction}>
@@ -149,7 +150,7 @@ const OverviewComponent =(props) => {
   return (
     <Container>
         <BalanceBox>
-            Balance: $1000
+            Balance: ${props.expense - props.income }
             <AddTransaction onClick={()=>toggleAddTxn(!isAddTxnVisible)}>{isAddTxnVisible ? "Cancel":"ADD"}</AddTransaction>
         </BalanceBox>
         {isAddTxnVisible && (
@@ -159,11 +160,12 @@ const OverviewComponent =(props) => {
         />)} 
         <ExpenseContainer>
           <ExpenseBox isIncome={false}>
-            Expense<span>$1000</span>
-          </ExpenseBox>
+            Expense<span>${props.income}</span>
+          </ExpenseBox>          
           <ExpenseBox isIncome={true}>
-            Income<span>$5000</span>
-          </ExpenseBox>         
+                Income<span>${props.expense}</span>
+          </ExpenseBox>    
+
         </ExpenseContainer>    
     </Container>
   )

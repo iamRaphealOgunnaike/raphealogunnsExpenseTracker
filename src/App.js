@@ -18,7 +18,7 @@ font-weight: bold;
 function App() {
   return (
     <Container >      
-      <Header>Expense Tracker</Header>
+      <Header>SCI-Expense Tracker</Header>
       <HomeComponent/>
     </Container>
   );
